@@ -8,7 +8,7 @@ import './styles.css';
 function App() {
   return (
     <div className="First">
-    <h1>Getting Started with Crime (Updated)</h1>
+    <h1>Getting git done mate (Updated)</h1>
     <Buttons/>
     <FormComp/>
     {/* {SearchApp} */}
