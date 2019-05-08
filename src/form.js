@@ -1,128 +1,142 @@
-import React,{ Component } from 'react';
+import React from 'react';
+import { useState } from "react";
 
-class FormComp extends Component { 
-    constructor(props) {
-        super(props);
-        this.state = {
-            newuser:
-            { 
-                email: "",
-                password:"" 
-            }   
+window.JWT="";
+
+
+function register(email,password){
+    
+    console.log("Registering");
+    // const url = "https://cab230.hackhouse.sh/register";
+    // fetch(url, {
+    //     method: "POST",
+    //     body: JSON.stringify( 
+    //         {"email":email,
+    //         "password":password}),
+    //     headers:{
+    //         "Content-Type":"application/json"
+    //     }
+        
+    // })
+    // .then(res => res.json())
+    // .then(response => console.log("Success:", JSON.stringify(response)))
+    // .catch(error => console.error("Error:", error));
+    console.log({password})
+    console.log({email})
+    return fetch("https://cab230.hackhouse.sh/register", {
+        method: "POST",
+        body: JSON.stringify( 
+            {"email":email,
+            "password":password}),
+        headers:{
+            "Content-Type":"application/json"
         }
-        this.handleFormSubmit=this.handleFormSubmit.bind(this);
-        this.handleClearForm=this.handleClearForm.bind(this);
-        this.handleEmail=this.handleEmail.bind(this)
-        this.handlePassword=this.handlePassword.bind(this)
-        
-    }
-
-    handleClearForm(e){
-        e.preventDefault();
-        this.setState({
-            newUser:{
-                email:'',
-                password:'',
-
-            },
-        })
-
-    }
-
-    handleFormSubmit(e){
-        e.preventDefault();
-        let userData=this.state.newuser;
-        const regButton = document.getElementById("regBtn");
-       
-        fetch("https://cab230.hackhouse.sh/register", {
-            method: "POST",
-            body: 'email=x.xxxx%40xxx.xxx.xx&password=xxxxxx',
-            headers: {
-            "Content-type": "application/x-www-form-urlencoded"
-        },
-        
         })
         .then(function(response) {
             if (response.ok) {
-              return response.json();
+            return response.json();
             }
             throw new Error("Network response was not ok");
-          })
-        .then(function(result) {
-            let appDiv = document.getElementById("app");
-            appDiv.innerHTML = JSON.stringify(result);
-            regButton.disabled = true;
         })
+        
+        .then(function(result) {
+           // let appDiv = document.getElementById("app");
+            console.log(JSON.stringify(result));
+            // regButton.disabled = true;
+        })
+        
         .catch(function(error) {
             console.log("There has been a problem with your fetch operation: ",error.message);
         });
+        
+}
 
-    }
 
-    handleEmail(e){
-        let value=e.target.value;
-        this.setState(prevState => ({ newuser :
-            {...prevState.newuser,email:value
-            }
-
-        }))
-    }
-
-    handlePassword(e){
-        let value=e.target.value;
-        this.setState(prevState => ({ newuser :
-            {...prevState.newuser,password:value
-            }
-
-        }), () => console.log(this.state.newUser))
-    }
-
-/*     handleInput(e){
-        let value=e.target.value;
-        let email=e.target.email;
-        this.setState( prevState => {
-            return{
-                newUser:{
-                    ...prevState.newUser,[email]:value
-                }
-            }
-        }, () => console.log(this.state.newuser)
+function login(email,password){
+    console.log("Login");
+    const url = "https://cab230.hackhouse.sh/login";
+    // var window.JWT="";
+    console.log({password})
+    console.log({email})
+    fetch(url, {
+        method: "POST",   
+        body: JSON.stringify( 
+            {"email":email,
+            "password":password}),
+        headers:{
+            "Content-Type":"application/json"
+        }
+        
+    
+    })
+        .then(res => res.json())
+        // .then(response => console.log("Success:", JSON.stringify(response)))
+        .then(function(response){
+            console.log(JSON.stringify(response));
+            window.JWT=response.token
+            console.log(JSON.stringify(window.JWT))
+        }
         )
-    }
-    xxxxxx */
+        // .then(res =>console.log("Success:", JSON.stringify(res))
+        
+        .catch(error => console.error("Error:", error));
+        
+}
 
-    render(){
-        return(
-            <div>
-                <form className="container" onSubmit={this.handleFormSubmit}>
-                    <input
-                        type={'text'}
-                        title={'Email'}
-                        value={this.state.newuser.email}
-                        placeholder={'Enter your email'}
-                        onChange={this.handleEmail}
-                    /> {/* Email of the user */}
-                    <input
-                        type={'text'}
-                        title={'Password'}
-                        value={this.state.newuser.password}
-                        placeholder={'Enter your Password'}
-                        onChange={this.handlePassword}
-                    /> {/* Password of the user */}
-                    {/* <button onClick={() => this.handleFormSubmit()}>Login</button>Login */}
-                    {/* <button onClick={() => this.handleClearForm()}>Clear But should be Rego</button>Register */}
+export function FormComp() { 
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+    
+    return (
+        <div id="form">
+        <form
+        onSubmit={(event)=>{event.preventDefault()}}>
 
-                    <button handleFormSubmit={this.handleFormSubmit}>Login</button>{/* Login */}
-                    <button handleClearForm= {this.handleClearForm}>Clear But should be Rego</button>{/* Register */}
-                    {/* <GiphyButton onClick={this.handleClick()}/>
-                    <GiphyButton handleClick={this.handleClick}/> */}
+        <h1>Hello {email}</h1>
+        <label htmlFor="email">Your Email:</label>
+        <input
+            type="text"
+            name="email"
+            id="email"
+            value={email}
+            placeholder="Enter your email here"
+            onChange={(event)=>setemail(event.target.value)}
+        />
+        <br />
+        <label htmlFor="password">Your Password:</label>
+        <input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            placeholder="Enter your password here"
+            onChange={(event)=>setpassword(event.target.value)}
+        />
 
-                </form>
+        <button
+          id="register"
+          type="button"
+          onClick={() => register(email,password)}
+        >
+        Register
+        </button>
 
-            </div>
-        );
-    }
+        <button
+          id="login"
+          type="button"
+          onClick={() => login(email,password)}
+        >
+        Login
+        </button>
+
+        <br />
+        {/* <button onClick={}>Login</button>
+        <button onClick={}>Register</button> */}
+        <br/>
+        </form>
+        </div>
+        
+    );
+
 }
     
-
-export default FormComp;

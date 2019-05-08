@@ -1,21 +1,20 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import Buttons from "./buttons.js";
-import FormComp from "./form.js";
+import {FormComp} from "./form.js";
+// import {SearchApp} from "./search.js";
 import './styles.css';
 
+function App() {
+  return (
+    <div className="First">
+    <h1>Getting Started with Crime (Updated)</h1>
+    <Buttons/>
+    <FormComp/>
+    {/* {SearchApp} */}
+    </div>
+  )
 
-class App extends React.Component {
-
-  render() {
-    return (
-      <div className="First">
-      <h1>Getting Started with Crime (Updated)</h1>
-      <Buttons/>
-      <FormComp/>
-      </div>
-    )
-  }
 }
 
 ReactDOM.render(
