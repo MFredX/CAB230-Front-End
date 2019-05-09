@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import Buttons from "./buttons.js";
 import {FormComp} from "./form.js";
 
 
@@ -9,10 +8,8 @@ import './styles.css';
 function App() {
   return (
     <div className="First">
-    <h1>Getting git done mate (Updated)</h1>
-    <Buttons/>
+    <h1><i><b>If crime data is what you want, that's what you get</b></i></h1>
     <FormComp/>
-    {/* {SearchApp} */}
     <h5 id="app"></h5>
     </div>
   )

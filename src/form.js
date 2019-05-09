@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from "react";
+import {Button} from 'reactstrap';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 window.JWT="";
 
@@ -92,7 +94,7 @@ function login(email,password){
 }
 
 
-function search(){
+function ArmedRobberySearch(){
     let getParam = { method: "GET" };
     let head = { Authorization: `Bearer ${window.JWT}` };
     getParam.headers = head;
@@ -118,6 +120,25 @@ function search(){
         });
 }
 
+
+function offences(){
+
+    fetch("https://cab230.hackhouse.sh/offences")
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Network response was not ok.");
+        })
+        .then(function(result) {
+            let appDiv = document.getElementById("app");
+            appDiv.innerHTML = JSON.stringify(result);
+        })
+        .catch(function(error) {
+            console.log("There has been a problem with your fetch operation: ",error.message);
+        });
+}
+
 export function FormComp() { 
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
@@ -127,7 +148,8 @@ export function FormComp() {
         <form
         onSubmit={(event)=>{event.preventDefault()}}>
 
-        <h1>Hello {email}</h1>
+        <h1>Welcome to the portal!</h1>
+        
         <label htmlFor="email">Your Email:</label>
         <input
             type="text"
@@ -146,32 +168,56 @@ export function FormComp() {
             value={password}
             placeholder="Enter your password here"
             onChange={(event)=>setpassword(event.target.value)}
-        />
+        />{' '}
 
-        <button
-          id="register"
-          type="button"
-          onClick={() => register(email,password)}
+        <div id="menu buttons">
+        <Button
+            color="primary"
+            id="register"
+            type="button"
+            onClick={() => register(email,password)}
         >
         Register
-        </button>
+        </Button>{' '}
 
-        <button
+        <Button
           id="login"
+          color="success"
           type="button"
           onClick={() => login(email,password)}
         >
         Login
-        </button>
+        </Button>{' '}
 
         
-        <button
-          id="searcg"
+        <Button
+          id="search"
+          color="warning"
           type="button"
-          onClick={() => search()}
+          onClick={() => ArmedRobberySearch()}
         >
-        Search
-        </button>
+        Armed Robbery
+        </Button>{' '}
+
+
+        <Button
+          id="offences"
+          color="danger"
+          type="button"
+          onClick={() => offences()}
+        >
+        Offences
+        </Button>{' '}
+        
+        </div>
+
+        <div id="filter">
+        <h2>Armed Robbery Offences - Filtered</h2>
+        <Button color="info">Area</Button>{' '}
+        <Button color="info">Age</Button>{' '}
+        <Button color="info">Year</Button>{' '}
+        </div>
+
         <br />
         {/* <button onClick={}>Login</button>
         <button onClick={}>Register</button> */}
