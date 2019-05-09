@@ -40,6 +40,8 @@ function register(email,password){
         })
         
         .then(function(result) {
+            let appDiv = document.getElementById("app");
+            appDiv.innerHTML = JSON.stringify(result);
            // let appDiv = document.getElementById("app");
             console.log(JSON.stringify(result));
             // regButton.disabled = true;
@@ -69,18 +71,51 @@ function login(email,password){
         
     
     })
-        .then(res => res.json())
-        // .then(response => console.log("Success:", JSON.stringify(response)))
-        .then(function(response){
-            console.log(JSON.stringify(response));
-            window.JWT=response.token
-            console.log(JSON.stringify(window.JWT))
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Network response was not ok.");
+        })
+        .then(function(result){
+            let appDiv = document.getElementById("app");
+            appDiv.innerHTML = JSON.stringify(result);
+            // console.log(JSON.stringify(result));
+            window.JWT=result.token
+            // console.log(JSON.stringify(window.JWT))
         }
         )
         // .then(res =>console.log("Success:", JSON.stringify(res))
         
         .catch(error => console.error("Error:", error));
         
+}
+
+
+function search(){
+    let getParam = { method: "GET" };
+    let head = { Authorization: `Bearer ${window.JWT}` };
+    getParam.headers = head;
+
+    //The URL
+    const baseUrl = "https://cab230.hackhouse.sh/search?";
+    const query = 'offence=Armed Robbery';
+    const url = baseUrl + query;
+
+    fetch(encodeURI(url),getParam)
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Network response was not ok.");
+        })
+        .then(function(result) {
+            let appDiv = document.getElementById("app");
+            appDiv.innerHTML = JSON.stringify(result);
+        })
+        .catch(function(error) {
+                console.log("There has been a problem with your fetch operation: ",error.message);
+        });
 }
 
 export function FormComp() { 
@@ -129,6 +164,14 @@ export function FormComp() {
         Login
         </button>
 
+        
+        <button
+          id="searcg"
+          type="button"
+          onClick={() => search()}
+        >
+        Search
+        </button>
         <br />
         {/* <button onClick={}>Login</button>
         <button onClick={}>Register</button> */}
