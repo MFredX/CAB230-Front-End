@@ -94,14 +94,14 @@ function login(email,password){
 }
 
 
-function ArmedRobberySearch(){
+function Search(search){
     let getParam = { method: "GET" };
     let head = { Authorization: `Bearer ${window.JWT}` };
     getParam.headers = head;
 
     //The URL
     const baseUrl = "https://cab230.hackhouse.sh/search?";
-    const query = 'offence=Armed Robbery';
+    const query = 'offence='+search;
     const url = baseUrl + query;
 
     fetch(encodeURI(url),getParam)
@@ -111,9 +111,9 @@ function ArmedRobberySearch(){
             }
             throw new Error("Network response was not ok.");
         })
-        .then(function(result) {
+        .then(function(resp) {
             let appDiv = document.getElementById("app");
-            appDiv.innerHTML = JSON.stringify(result);
+            appDiv.innerHTML = JSON.stringify(resp);
         })
         .catch(function(error) {
                 console.log("There has been a problem with your fetch operation: ",error.message);
@@ -142,7 +142,8 @@ function offences(){
 export function FormComp() { 
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    
+    const[search,setsearch]=useState("");
+
     return (
         <div id="form">
         <form
@@ -194,9 +195,9 @@ export function FormComp() {
           id="search"
           color="warning"
           type="button"
-          onClick={() => ArmedRobberySearch()}
+          onClick={() => Search(search)}
         >
-        Armed Robbery
+        Search
         </Button>{' '}
 
 
@@ -210,7 +211,15 @@ export function FormComp() {
         </Button>{' '}
         
         </div>
-
+        <label htmlFor="search">Your Search Parameters:</label>
+        <input
+            type="search"
+            name="search"
+            id="search"
+            value={search}
+            placeholder="Search here"
+            onChange={(event)=>setsearch(event.target.value)}
+        />{' '}
         <div id="filter">
         <h2>Armed Robbery Offences - Filtered</h2>
         <Button color="info">Area</Button>{' '}
