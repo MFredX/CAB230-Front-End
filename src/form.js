@@ -112,8 +112,9 @@ function Search(search){
             throw new Error("Network response was not ok.");
         })
         .then(function(resp) {
-            let appDiv = document.getElementById("app");
-            appDiv.innerHTML = JSON.stringify(resp);
+            // let appDiv = document.getElementById("app");
+            // appDiv.innerHTML = JSON.stringify(resp);
+            
         })
         .catch(function(error) {
                 console.log("There has been a problem with your fetch operation: ",error.message);
