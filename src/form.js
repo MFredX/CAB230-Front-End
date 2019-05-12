@@ -7,24 +7,6 @@ window.JWT="";
 
 
 function register(email,password){
-    
-    console.log("Registering");
-    // const url = "https://cab230.hackhouse.sh/register";
-    // fetch(url, {
-    //     method: "POST",
-    //     body: JSON.stringify( 
-    //         {"email":email,
-    //         "password":password}),
-    //     headers:{
-    //         "Content-Type":"application/json"
-    //     }
-        
-    // })
-    // .then(res => res.json())
-    // .then(response => console.log("Success:", JSON.stringify(response)))
-    // .catch(error => console.error("Error:", error));
-    console.log({password})
-    console.log({email})
     return fetch("https://cab230.hackhouse.sh/register", {
         method: "POST",
         body: JSON.stringify( 
@@ -44,9 +26,7 @@ function register(email,password){
         .then(function(result) {
             let appDiv = document.getElementById("app");
             appDiv.innerHTML = JSON.stringify(result);
-           // let appDiv = document.getElementById("app");
             console.log(JSON.stringify(result));
-            // regButton.disabled = true;
         })
         
         .catch(function(error) {
@@ -57,11 +37,7 @@ function register(email,password){
 
 
 function login(email,password){
-    console.log("Login");
     const url = "https://cab230.hackhouse.sh/login";
-    // var window.JWT="";
-    console.log({password})
-    console.log({email})
     fetch(url, {
         method: "POST",   
         body: JSON.stringify( 
@@ -82,13 +58,10 @@ function login(email,password){
         .then(function(result){
             let appDiv = document.getElementById("app");
             appDiv.innerHTML = JSON.stringify(result);
-            // console.log(JSON.stringify(result));
+            console.log(JSON.stringify(result));
             window.JWT=result.token
-            // console.log(JSON.stringify(window.JWT))
         }
-        )
-        // .then(res =>console.log("Success:", JSON.stringify(res))
-        
+        )        
         .catch(error => console.error("Error:", error));
         
 }
@@ -111,15 +84,55 @@ function Search(search){
             }
             throw new Error("Network response was not ok.");
         })
-        .then(function(resp) {
-            // let appDiv = document.getElementById("app");
-            // appDiv.innerHTML = JSON.stringify(resp);
+
+        .then(res=>res.result)//Getting results
+        
+        .then(function(result){
+            // console.log(JSON.stringify(result[0].LGA))
+            // result.map(console.log)
+           
             
+            const LGA=retrieveLGA(result)
+            const total=retrievetotal(result)
+            const lat=retrievelat(result)
+            const lng=retrievelng(result) 
+            const str=LGA+"<br>"+total+"<br>"+lat+"<br>"+lng
+            let newDiv = document.getElementById("app");
+            newDiv.innerHTML =JSON.stringify(str);
         })
+
         .catch(function(error) {
                 console.log("There has been a problem with your fetch operation: ",error.message);
         });
 }
+
+
+
+function retrieveLGA(queryResult) {
+    return (
+        queryResult.map((single,index)=>(single.LGA)
+    )
+    )
+}
+function retrievetotal(queryResult) {
+    return (
+        queryResult.map((single,index)=>(single.total)
+    )
+    )
+}
+function retrievelat(queryResult) {
+    return (
+        queryResult.map((single,index)=>(single.lat)
+    )
+    )
+}
+function retrievelng(queryResult) {
+    return (
+        queryResult.map((single,index)=>(single.lng)
+    )
+    )
+}
+        
 
 
 function offences(){
@@ -216,7 +229,7 @@ export function FormComp() {
         <input
             type="search"
             name="search"
-            id="search"
+            id="searchinput"
             value={search}
             placeholder="Search here"
             onChange={(event)=>setsearch(event.target.value)}
