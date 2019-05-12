@@ -1,10 +1,15 @@
 import React from 'react';
 import { useState } from "react";
 import {Button} from 'reactstrap';
+import {SearchBar} from "./searchbar.js"
+import { useQR } from "./searchapi";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 window.JWT="";
 
+function Headline(props) {
+    return <h1>{props.title}</h1>;
+}
 
 function register(email,password){
     return fetch("https://cab230.hackhouse.sh/register", {
@@ -66,75 +71,7 @@ function login(email,password){
         
 }
 
-
-function Search(search){
-    let getParam = { method: "GET" };
-    let head = { Authorization: `Bearer ${window.JWT}` };
-    getParam.headers = head;
-
-    //The URL
-    const baseUrl = "https://cab230.hackhouse.sh/search?";
-    const query = 'offence='+search;
-    const url = baseUrl + query;
-
-    fetch(encodeURI(url),getParam)
-        .then(function(response) {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error("Network response was not ok.");
-        })
-
-        .then(res=>res.result)//Getting results
         
-        .then(function(result){
-            // console.log(JSON.stringify(result[0].LGA))
-            // result.map(console.log)
-           
-            
-            const LGA=retrieveLGA(result)
-            const total=retrievetotal(result)
-            const lat=retrievelat(result)
-            const lng=retrievelng(result) 
-            const str=LGA+"<br>"+total+"<br>"+lat+"<br>"+lng
-            let newDiv = document.getElementById("app");
-            newDiv.innerHTML =JSON.stringify(str);
-        })
-
-        .catch(function(error) {
-                console.log("There has been a problem with your fetch operation: ",error.message);
-        });
-}
-
-
-
-function retrieveLGA(queryResult) {
-    return (
-        queryResult.map((single,index)=>(single.LGA)
-    )
-    )
-}
-function retrievetotal(queryResult) {
-    return (
-        queryResult.map((single,index)=>(single.total)
-    )
-    )
-}
-function retrievelat(queryResult) {
-    return (
-        queryResult.map((single,index)=>(single.lat)
-    )
-    )
-}
-function retrievelng(queryResult) {
-    return (
-        queryResult.map((single,index)=>(single.lng)
-    )
-    )
-}
-        
-
-
 function offences(){
 
     fetch("https://cab230.hackhouse.sh/offences")
@@ -156,7 +93,8 @@ function offences(){
 export function FormComp() { 
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    const[search,setsearch]=useState("");
+    const [search, setSearch] = useState("");
+    const { loading, Qdata, error } = useQR(search);
 
     return (
         <div id="form">
@@ -204,17 +142,6 @@ export function FormComp() {
         Login
         </Button>{' '}
 
-        
-        <Button
-          id="search"
-          color="warning"
-          type="button"
-          onClick={() => Search(search)}
-        >
-        Search
-        </Button>{' '}
-
-
         <Button
           id="offences"
           color="danger"
@@ -225,15 +152,20 @@ export function FormComp() {
         </Button>{' '}
         
         </div>
-        <label htmlFor="search">Your Search Parameters:</label>
-        <input
-            type="search"
-            name="search"
-            id="searchinput"
-            value={search}
-            placeholder="Search here"
-            onChange={(event)=>setsearch(event.target.value)}
-        />{' '}
+        
+        <SearchBar onSubmit={setSearch} />
+
+        {Qdata.map((oneQdata,index) => (
+ 
+            <div key={index}>
+                <p className="LGA">{oneQdata.LGA} </p> 
+                <p className="lat">{oneQdata.lat}</p> 
+                <p className="long">{oneQdata.lng}</p> 
+                <p className="tot">{oneQdata.total}</p> 
+            </div>
+
+        ))}
+     
         <div id="filter">
         <h2>Armed Robbery Offences - Filtered</h2>
         <Button color="info">Area</Button>{' '}
@@ -241,10 +173,6 @@ export function FormComp() {
         <Button color="info">Year</Button>{' '}
         </div>
 
-        <br />
-        {/* <button onClick={}>Login</button>
-        <button onClick={}>Register</button> */}
-        <br/>
         </form>
         </div>
         
