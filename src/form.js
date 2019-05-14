@@ -154,14 +154,18 @@ export function FormComp() {
         </div>
         
         <SearchBar onSubmit={setSearch} />
-
+        
         {Qdata.map((oneQdata,index) => (
- 
+            
             <div key={index}>
                 <p className="LGA">{oneQdata.LGA} </p> 
+                {console.log(oneQdata)}
                 <p className="lat">{oneQdata.lat}</p> 
+                {console.log(oneQdata.lat)}
                 <p className="long">{oneQdata.lng}</p> 
+                {/* {console.log(oneQdata.result.lng)} */}
                 <p className="tot">{oneQdata.total}</p> 
+                {console.log(oneQdata.total)}
             </div>
 
         ))}
