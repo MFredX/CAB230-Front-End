@@ -4,6 +4,8 @@ import { Button } from "reactstrap";
 import { SearchBar } from "./searchbar.js";
 import { useQR } from "./searchapi";
 import Table from "react-bootstrap/Table";
+import OffenseListSearch from "./offencedropdown.js";
+
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 window.JWT = "";
@@ -125,6 +127,7 @@ export function FormComp() {
           event.preventDefault();
         }}
       >
+        <OffenseListSearch />
         <h1>Welcome to the portal!</h1>
         <label htmlFor="email">Your Email:</label>
         <input
