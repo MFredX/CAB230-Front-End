@@ -10,10 +10,16 @@ export function Header() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Splash Screen</Link>
+            <Link to="/">Login</Link>
           </li>
           <li>
-            <Link to="/Register">Register</Link>
+            <Link to="/register">Register</Link>
+          </li>
+          <li>
+            <Link to="/search">Search</Link>
+          </li>
+          <li>
+            <Link to="/charts">Charts</Link>
           </li>
         </ul>
       </nav>
