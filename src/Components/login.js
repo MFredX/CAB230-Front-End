@@ -127,7 +127,7 @@ export function LoginScreen() {
           event.preventDefault();
         }}
       >
-        <OffenseListSearch />
+        <OffenseListSearch onClick={setSearch} />
         <h1>Welcome to the portal!</h1>
         <label htmlFor="email">Your Email:</label>
         <input

@@ -25,7 +25,9 @@ export default function OffenseListSearch(props) {
           <Dropdown.Item
             key={index}
             href=""
-            onClick={() => props.onClick(innerSearch)}
+            value={innerSearch}
+            onClick={e => setInnerSearch(e.target.value)}
+            //onClick={() => props.onSubmit(innerSearch)}
           >
             {offence}
           </Dropdown.Item>
