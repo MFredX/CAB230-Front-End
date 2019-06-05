@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import { LoginScreen } from "./login";
-import { Register } from "./register";
-
+import { RegisterPage } from "./register";
+import { SearchPage } from "./searchpage";
 import "../styles.css";
 
 export function Main() {
@@ -11,10 +11,10 @@ export function Main() {
     <main>
       <Switch>
         <Route exact path="/" component={LoginScreen} />
-        <Route path="/register" component={Register} />
-        <Route path="/search" component={Register} />
-        <Route path="/graphs" component={Register} />
-        <Route path="/charts" component={Register} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/search" component={SearchPage} />
+        <Route path="/graphs" component={RegisterPage} />
+        <Route path="/charts" component={RegisterPage} />
       </Switch>
     </main>
   );

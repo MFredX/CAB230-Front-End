@@ -92,33 +92,6 @@ function offences() {
 export function LoginScreen() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [search, setSearch] = useState("");
-  const { loading, Qdata, error } = useQR(search);
-
-  function createTable() {
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>LGA</th>
-            <th>Latitude</th>
-            <th>Longtitude</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Qdata.map((data, index) => (
-            <tr key={index}>
-              <td>{data.LGA}</td>
-              <td>{data.lat}</td>
-              <td>{data.lng}</td>
-              <td>{data.total}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  }
 
   return (
     <div id="form">
@@ -127,8 +100,9 @@ export function LoginScreen() {
           event.preventDefault();
         }}
       >
-        <OffenseListSearch onSubmit={setSearch} />
-        <h1>Welcome to the portal!</h1>
+        {/* <OffenseListSearch onSubmit={setSearch} /> */}
+        <h1>Welcome to the Crime Search App</h1>
+        <h2>Login here</h2>
         <label htmlFor="email">Your Email:</label>
         <input
           type="text"
@@ -150,14 +124,6 @@ export function LoginScreen() {
         />{" "}
         <div id="menu buttons">
           <Button
-            color="primary"
-            id="register"
-            type="button"
-            onClick={() => register(email, password)}
-          >
-            Register
-          </Button>{" "}
-          <Button
             id="login"
             color="success"
             type="button"
@@ -165,16 +131,16 @@ export function LoginScreen() {
           >
             Login
           </Button>{" "}
-          <Button
+          {/* <Button
             id="offences"
             color="danger"
             type="button"
             onClick={() => offences()}
           >
             Offences
-          </Button>{" "}
+          </Button>{" "} */}
         </div>
-        <SearchBar onSubmit={setSearch} />
+        {/* <SearchBar onSubmit={setSearch} /> */}
         <div id="filter">
           <h2>Armed Robbery Offences - Filtered</h2>
           <Button color="info">
@@ -182,7 +148,6 @@ export function LoginScreen() {
           </Button> <Button color="info">Age</Button>{" "}
           <Button color="info">Year</Button>{" "}
         </div>
-        <div>{Qdata != "" && createTable()}</div>
       </form>
     </div>
   );

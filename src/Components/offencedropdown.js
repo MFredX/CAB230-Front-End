@@ -20,19 +20,34 @@ export default function OffenseListSearch(props) {
 
   return (
     <div>
-      <DropdownButton id="dropdown-basic-button" title="List of Offences">
+      <DropdownButton
+        id="dropdown-basic-button"
+        title="List of Offences"
+        onSubmit={() => props.onSubmit(innerSearch)}
+      >
         {offenseList.map((offence, index) => (
           <Dropdown.Item
             key={index}
             href=""
             value={innerSearch}
             //onClick={e => setInnerSearch(e.target.value)}
-            onClick={() => props.onSubmit(innerSearch)}
+            //onSelect={e => setInnerSearch(e.target.value)}
+            //onSelect={() => props.onSubmit(innerSearch)}
+            onSelect={e => setInnerSearch(e.target.value)}
           >
             {offence}
           </Dropdown.Item>
         ))}
       </DropdownButton>
+
+      {/* <Button
+        id="search-button"
+        type="button"
+        color="danger"
+        onClick={() => props.onSubmit(innerSearch)}
+      >
+        Search
+      </Button> */}
     </div>
   );
 }
