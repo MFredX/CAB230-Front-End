@@ -1,15 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
-//import { useQR } from "./searchapi";
-import Table from "react-bootstrap/Table";
-import OffenseListSearch from "./offencedropdown.js";
+import { Link, Redirect } from "react-router-dom";
+
 import {
   UseYears,
   UseAreas,
   UseAges,
   UseGenders,
-  UseOffences
+  UseOffences,
+  UseSearch
 } from "./getdata";
 import Select from "react-select";
 import "../styles.css";
@@ -36,16 +36,29 @@ export function GetInnerGenders() {
 export function GetInnerYears() {
   return innerYears;
 }
+
+function DisplayTable() {
+  const { resultLoading, results, resultError } = UseSearch(
+    GetInnerOffence(),
+    GetInnerAreas(),
+    GetInnerAges(),
+    GetInnerGenders(),
+    GetInnerYears()
+  );
+
+  console.log(results);
+}
 export function SearchPage() {
   const [search, setSearch] = useState("");
   //const { loading, Qdata, error } = useQR(search);
-  const { offencesLoading, offences, offencesError } = UseOffences();
-  const { Areasloading, areas, AreasError } = UseAreas();
+  const { OffencesLoading, Offences, OffencesError } = UseOffences();
+  const { Areasloading, Areas, AreasError } = UseAreas();
   const { Agesloading, Ages, AgesError } = UseAges();
   const { Gendersloading, Genders, GendersError } = UseGenders();
   const { Yearsloading, Years, YearsError } = UseYears();
 
   const [CompleteSearch, setCompleteSearched] = useState(false);
+  const [displayReady, setDisplayReady] = useState(false);
 
   //Decalring filters
   const [filterOffence, setFilterOffence] = useState(null);
@@ -55,17 +68,17 @@ export function SearchPage() {
   const [filterYears, setFilterYears] = useState(null);
 
   if (
-    offencesLoading ||
+    OffencesLoading ||
     Areasloading ||
     Agesloading ||
     Gendersloading ||
     Yearsloading
   ) {
     return <p className="searchContainerNotifier">Loading...</p>;
-  } else if (offencesError) {
+  } else if (OffencesError) {
     return (
       <p className="searchContainerNotifier">
-        Something went wrong with Offences hook: {offencesError.message}
+        Something went wrong with Offences hook: {OffencesError.message}
       </p>
     );
   } else if (AreasError) {
@@ -93,15 +106,14 @@ export function SearchPage() {
       </p>
     );
   } else if (CompleteSearch) {
-    //return <TableDraw/>;
-    return <p>LADDDDSSSSS</p>;
+    return <Redirect to={"/searchResults"} />;
   }
   //Mapping out variables to be accessed
-  const offencesOptions = offences.map(offence => ({
+  const offencesOptions = Offences.map(offence => ({
     value: offence,
     label: offence
   }));
-  const areasOptions = areas.map(area => ({
+  const areasOptions = Areas.map(area => ({
     value: area,
     label: area
   }));
@@ -224,6 +236,7 @@ export function SearchPage() {
       >
         Search
       </Button>
+      {/* <div>{displayReady === true && DisplayTable()}</div> */}
     </div>
   );
 }

@@ -1,10 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
-import { SearchBar } from "./searchbar.js";
-import { useQR } from "./searchapi";
 import Table from "react-bootstrap/Table";
-import OffenseListSearch from "./offencedropdown.js";
+import { Link, Redirect } from "react-router-dom";
 import "../styles.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
@@ -24,14 +22,14 @@ function register(email, password) {
     .then(function(response) {
       if (response.ok) {
         return response.json();
+      } else {
+        alert("Please recheck details");
+        throw new Error("Network response was not ok");
       }
-      throw new Error("Network response was not ok");
     })
 
     .then(function(result) {
-      let appDiv = document.getElementById("app");
-      appDiv.innerHTML = JSON.stringify(result);
-      console.log(JSON.stringify(result));
+      alert("Succesfullt registration!You may now vist the login page!");
     })
 
     .catch(function(error) {

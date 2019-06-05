@@ -11,9 +11,9 @@ function GetOffences() {
 
 //Function to use offences
 export function UseOffences() {
-  const [offencesloading, setOffencesLoading] = useState(true);
-  const [offences, setOffences] = useState([]);
-  const [offencesError, setOffencesError] = useState(null);
+  const [Offencesloading, setOffencesLoading] = useState(true);
+  const [Offences, setOffences] = useState([]);
+  const [OffencesError, setOffencesError] = useState(null);
 
   useEffect(() => {
     GetOffences()
@@ -28,9 +28,9 @@ export function UseOffences() {
   }, []);
 
   return {
-    offencesloading,
-    offences,
-    offencesError
+    Offencesloading,
+    Offences,
+    OffencesError
   };
 }
 
@@ -43,9 +43,9 @@ function GetAreas() {
 
 //Function to use areas
 export function UseAreas() {
-  const [areasloading, setAreasLoading] = useState(true);
-  const [areas, setAreas] = useState([]);
-  const [areasError, setAreasError] = useState(null);
+  const [Areasloading, setAreasLoading] = useState(true);
+  const [Areas, setAreas] = useState([]);
+  const [AreasError, setAreasError] = useState(null);
 
   useEffect(() => {
     GetAreas()
@@ -60,9 +60,9 @@ export function UseAreas() {
   }, []);
 
   return {
-    areasloading,
-    areas,
-    areasError
+    Areasloading,
+    Areas,
+    AreasError
   };
 }
 

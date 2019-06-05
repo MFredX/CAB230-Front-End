@@ -1,46 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
-import { SearchBar } from "./searchbar.js";
-import { useQR } from "./searchapi";
 import Table from "react-bootstrap/Table";
-import OffenseListSearch from "./offencedropdown.js";
 import "../styles.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 window.JWT = "";
-
-function register(email, password) {
-  return fetch("https://cab230.hackhouse.sh/register", {
-    method: "POST",
-    body: JSON.stringify({
-      email: email,
-      password: password
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Network response was not ok");
-    })
-
-    .then(function(result) {
-      let appDiv = document.getElementById("app");
-      appDiv.innerHTML = JSON.stringify(result);
-      console.log(JSON.stringify(result));
-    })
-
-    .catch(function(error) {
-      console.log(
-        "There has been a problem with your fetch operation: ",
-        error.message
-      );
-    });
-}
 
 function login(email, password) {
   const url = "https://cab230.hackhouse.sh/login";
@@ -62,8 +27,7 @@ function login(email, password) {
     })
     .then(function(result) {
       let appDiv = document.getElementById("app");
-      appDiv.innerHTML = JSON.stringify(result);
-      console.log(JSON.stringify(result));
+      alert("Succesfullt login! Vist the search to begin you search!");
       window.JWT = result.token;
     })
     .catch(error => console.error("Error:", error));

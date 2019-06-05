@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import { LoginScreen } from "./login";
 import { RegisterPage } from "./register";
+import { DisplayResult } from "./displayresult";
 import { SearchPage } from "./searchpage";
 import "../styles.css";
 
@@ -15,6 +16,7 @@ export function Main() {
         <Route path="/search" component={SearchPage} />
         <Route path="/graphs" component={RegisterPage} />
         <Route path="/charts" component={RegisterPage} />
+        <Route path="/searchResults" component={DisplayResult} />
       </Switch>
     </main>
   );
