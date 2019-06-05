@@ -15,7 +15,6 @@ export function Main() {
         <Route path="/register" component={RegisterPage} />
         <Route path="/search" component={SearchPage} />
         <Route path="/graphs" component={RegisterPage} />
-        <Route path="/charts" component={RegisterPage} />
         <Route path="/searchResults" component={DisplayResult} />
       </Switch>
     </main>

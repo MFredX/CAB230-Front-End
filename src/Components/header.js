@@ -16,9 +16,6 @@ export function Header() {
           <li>
             <Link to="/search">Search</Link>
           </li>
-          <li>
-            <Link to="/charts">Charts</Link>
-          </li>
         </ul>
       </nav>
     </div>

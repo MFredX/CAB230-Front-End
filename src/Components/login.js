@@ -75,22 +75,6 @@ export function LoginScreen() {
           >
             Login
           </Button>{" "}
-          {/* <Button
-            id="offences"
-            color="danger"
-            type="button"
-            onClick={() => offences()}
-          >
-            Offences
-          </Button>{" "} */}
-        </div>
-        {/* <SearchBar onSubmit={setSearch} /> */}
-        <div id="filter">
-          <h2>Armed Robbery Offences - Filtered</h2>
-          <Button color="info">
-            Area
-          </Button> <Button color="info">Age</Button>{" "}
-          <Button color="info">Year</Button>{" "}
         </div>
       </form>
     </div>
