@@ -35,6 +35,11 @@ export function DisplayResult() {
     TotalOffences: result.total
   }));
 
+  const MapData = results.map(result => ({
+    Latitude: result.lat,
+    Longitude: result.lng
+  }));
+
   console.log(graphData);
 
   function toObject(arr) {
