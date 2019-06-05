@@ -69,26 +69,6 @@ function login(email, password) {
     .catch(error => console.error("Error:", error));
 }
 
-function offences() {
-  fetch("https://cab230.hackhouse.sh/offences")
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Network response was not ok.");
-    })
-    .then(function(result) {
-      let appDiv = document.getElementById("app");
-      appDiv.innerHTML = JSON.stringify(result);
-    })
-    .catch(function(error) {
-      console.log(
-        "There has been a problem with your fetch operation: ",
-        error.message
-      );
-    });
-}
-
 export function LoginScreen() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");

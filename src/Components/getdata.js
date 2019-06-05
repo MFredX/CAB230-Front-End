@@ -11,12 +11,12 @@ function GetOffences() {
 
 //Function to use offences
 export function UseOffences() {
-  const [Offencesloading, setOffencesLoading] = useState(true);
-  const [Offences, setOffences] = useState([]);
-  const [OffencesError, setOffencesError] = useState(null);
+  const [offencesloading, setOffencesLoading] = useState(true);
+  const [offences, setOffences] = useState([]);
+  const [offencesError, setOffencesError] = useState(null);
 
   useEffect(() => {
-    getQR(search)
+    GetOffences()
       .then(Offences => {
         setOffences(Offences);
         setOffencesLoading(false);
@@ -28,9 +28,9 @@ export function UseOffences() {
   }, []);
 
   return {
-    Offencesloading,
-    Offences,
-    OffencesError
+    offencesloading,
+    offences,
+    offencesError
   };
 }
 
@@ -43,14 +43,14 @@ function GetAreas() {
 
 //Function to use areas
 export function UseAreas() {
-  const [Areasloading, setAreasLoading] = useState(true);
-  const [Areas, setAreas] = useState([]);
-  const [AreasError, setAreasError] = useState(null);
+  const [areasloading, setAreasLoading] = useState(true);
+  const [areas, setAreas] = useState([]);
+  const [areasError, setAreasError] = useState(null);
 
   useEffect(() => {
-    getQR(search)
-      .then(Areas => {
-        setAreas(Areas);
+    GetAreas()
+      .then(areas => {
+        setAreas(areas);
         setAreasLoading(false);
       })
       .catch(e => {
@@ -60,9 +60,9 @@ export function UseAreas() {
   }, []);
 
   return {
-    Areasloading,
-    Areas,
-    AreasError
+    areasloading,
+    areas,
+    areasError
   };
 }
 
@@ -79,7 +79,7 @@ export function UseAges() {
   const [AgesError, setAgesError] = useState(null);
 
   useEffect(() => {
-    getQR(search)
+    GetAges()
       .then(Ages => {
         setAges(Ages);
         setAgesLoading(false);
@@ -111,7 +111,7 @@ export function UseGenders() {
   const [GendersError, setGendersError] = useState(null);
 
   useEffect(() => {
-    getQR(search)
+    GetGenders()
       .then(Genders => {
         setGenders(Genders);
         setGendersLoading(false);
@@ -143,7 +143,7 @@ export function UseYears() {
   const [YearsError, setYearsError] = useState(null);
 
   useEffect(() => {
-    getQR(search)
+    GetYears()
       .then(Years => {
         setYears(Years);
         setYearsLoading(false);
@@ -158,5 +158,82 @@ export function UseYears() {
     Yearsloading,
     Years,
     YearsError
+  };
+}
+
+//Function to get Query Results
+function Search(offence, areas, ages, genders, years) {
+  // Format saerch parameters.
+  let filter = "";
+
+  if (areas !== null) {
+    filter = `area=${areas.toString()}`;
+  }
+  if (ages !== null) {
+    if (filter === "") {
+      filter = `age=${ages.toString()}`;
+    } else {
+      filter += `&age=${ages.toString()}`;
+    }
+  }
+  if (genders !== null) {
+    if (filter === "") {
+      filter = `gender=${genders.toString()}`;
+    } else {
+      filter += `&gender=${genders.toString()}`;
+    }
+  }
+  if (years !== null) {
+    if (filter === "") {
+      filter = `year=${years.toString()}`;
+    } else {
+      filter += `&year=${years.toString()}`;
+    }
+  }
+
+  //The parameters of the call
+  let getParam = { method: "GET" };
+  let head = { Authorization: `Bearer ${window.JWT}` };
+  getParam.headers = head;
+
+  //The URL
+  const baseUrl = "https://cab230.hackhouse.sh/search?";
+  const query = `offence=${offence}`;
+  let url = "";
+
+  // Check if there are any filters.
+  if (filter === "") {
+    url = baseUrl + query;
+  } else {
+    url = baseUrl + query + "&" + filter;
+  }
+
+  return fetch(encodeURI(url), getParam)
+    .then(response => response.json())
+    .then(response => response.result);
+}
+
+// Function to hook to the results from Search().
+export function UseSearch(offence, areas, ages, genders, years) {
+  const [resultLoading, setResultLoading] = useState(true);
+  const [results, setResults] = useState([]);
+  const [resultError, setResultError] = useState(null);
+
+  useEffect(() => {
+    Search(offence, areas, ages, genders, years)
+      .then(results => {
+        setResults(results);
+        setResultLoading(false);
+      })
+      .catch(error => {
+        setResultError(error);
+        setResultLoading(false);
+      });
+  }, [offence, areas, ages, genders, years]);
+
+  return {
+    resultLoading,
+    results,
+    resultError
   };
 }
