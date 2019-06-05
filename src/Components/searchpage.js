@@ -94,7 +94,7 @@ export function SearchPage() {
     );
   } else if (CompleteSearch) {
     //return <TableDraw/>;
-    <p>LADDDDSSSSS</p>;
+    return <p>LADDDDSSSSS</p>;
   }
   //Mapping out variables to be accessed
   const offencesOptions = offences.map(offence => ({
