@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { UseSearch } from "./getdata";
-import { useState } from "react";
 import {
   GetInnerOffence,
   GetInnerAreas,
@@ -13,7 +12,6 @@ import SmartDataTable from "react-smart-data-table";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 export function DisplayResult() {
-  const [gData, setgData] = useState({});
   const { resultLoading, results, resultError } = UseSearch(
     GetInnerOffence(),
     GetInnerAreas(),
@@ -48,8 +46,6 @@ export function DisplayResult() {
       if (arr[i] !== undefined) rv[i] = arr[i];
     return rv;
   }
-  //var graphObject = {};
-  //let graphObject = toObject(graphData);
 
   return (
     <div>

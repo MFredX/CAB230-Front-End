@@ -74,37 +74,17 @@ export function SearchPage() {
     Gendersloading ||
     Yearsloading
   ) {
-    return <p className="searchContainerNotifier">Loading...</p>;
+    return <p>Loading...</p>;
   } else if (OffencesError) {
-    return (
-      <p className="searchContainerNotifier">
-        Something went wrong with Offences hook: {OffencesError.message}
-      </p>
-    );
+    return <p>Error{OffencesError.message}</p>;
   } else if (AreasError) {
-    return (
-      <p className="searchContainerNotifier">
-        Something went wrong with Areas hook: {AreasError.message}
-      </p>
-    );
+    return <p>Error: {AreasError.message}</p>;
   } else if (AgesError) {
-    return (
-      <p className="searchContainerNotifier">
-        Something went wrong with Ages hook: {AgesError.message}
-      </p>
-    );
+    return <p>Error {AgesError.message}</p>;
   } else if (GendersError) {
-    return (
-      <p className="searchContainerNotifier">
-        Something went wrong with Genders hook: {GendersError.message}
-      </p>
-    );
+    return <p>Error {GendersError.message}</p>;
   } else if (YearsError) {
-    return (
-      <p className="searchContainerNotifier">
-        Something went wrong with Years hook: {YearsError.message}
-      </p>
-    );
+    return <p>Error {YearsError.message}</p>;
   } else if (CompleteSearch) {
     return <Redirect to={"/searchResults"} />;
   }
